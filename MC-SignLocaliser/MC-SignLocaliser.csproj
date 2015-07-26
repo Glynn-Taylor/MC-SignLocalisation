@@ -50,8 +50,9 @@
     <StartupObject>MCGT_SignTranslator.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="fNbt">
-      <HintPath>..\NBT-Tester\lib\fNbt.dll</HintPath>
+    <Reference Include="fNbt, Version=0.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\fNbt.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

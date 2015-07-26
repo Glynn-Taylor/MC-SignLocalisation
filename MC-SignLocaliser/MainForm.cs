@@ -37,7 +37,7 @@ namespace MCGT_SignTranslator
 
             }
         }
-        //Example at r.0.2 [31,0]
+        //Example of translated sign at r.0.2 [31,0] in test
         private void LoadSigns(string path)
         {
             Stream regionFile = File.Open(path, FileMode.OpenOrCreate);
