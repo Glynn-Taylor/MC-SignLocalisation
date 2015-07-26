@@ -1,0 +1,7 @@
+﻿http://www.minecraftforum.net/forums/minecraft-discussion/redstone-discussion-and/351959-1-8-raw-json-text-examples-for-tellraw-title-books
+http://minecraft.gamepedia.com/Sign#ID
+http://minecraft.gamepedia.com/Language
+https://github.com/fragmer/fNbt/blob/master/fNbt.Test/ListTests.cs
+http://minecraft.gamepedia.com/Region_file_format
+http://pastebin.com/niWTqLvk
+https://github.com/SirCmpwn/Craft.Net/blob/bc20a3d3f6c60957ecd04cc7388e225387158eb1/source/Craft.Net.Anvil/Region.cs
