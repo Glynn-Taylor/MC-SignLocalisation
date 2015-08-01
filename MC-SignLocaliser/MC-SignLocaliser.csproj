@@ -66,6 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GTaylor\Data\Chunk.cs" />
+    <Compile Include="GTaylor\Serialization\RegionIO.cs" />
     <Compile Include="LanguageSelectionItem.cs">
       <SubType>UserControl</SubType>
     </Compile>

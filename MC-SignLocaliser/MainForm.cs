@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MCGT_SignTranslator;
 using fNbt;
 using System.IO;
+using MCGT_SignTranslator.GTaylor.Serialization;
 
 namespace MCGT_SignTranslator
 {
@@ -19,6 +20,9 @@ namespace MCGT_SignTranslator
         private const int PAGE_LENGTH = 4096;
         private string[] Languages = { "English", "Deutsch", "Francais", "Espanol" };
         private Image[] LanguageIcons = { Properties.Resources.en1, Properties.Resources.de, Properties.Resources.fr, Properties.Resources.es };
+        private Dictionary<Point, NbtFile> LoadedChunks = new Dictionary<Point, NbtFile>();
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -37,44 +41,12 @@ namespace MCGT_SignTranslator
 
             }
         }
+
         //Example of translated sign at r.0.2 [31,0] in test
-        private void LoadSigns(string path)
-        {
-            Stream regionFile = File.Open(path, FileMode.OpenOrCreate);
-
-            for (int x = 0; x < CHUNK_SIZE; x++)
-            {
-                for (int z = 0; z < CHUNK_SIZE; z++)
-                {
-                    var chunkData = GetChunkFromTable(x, z, regionFile);
-                    if (chunkData != null)
-                    {
-                        regionFile.Seek(chunkData.Item1, SeekOrigin.Begin);
-                        int length = (int)ReadUInt32(regionFile);
-                        int compressionMode = regionFile.ReadByte();
-                        //Console.WriteLine("Compression mode: " + compressionMode.ToString());
-                        switch (compressionMode)
-                        {
-                            case 1: // gzip
-                                break;
-                            case 2: // zlib
-                                var nbt = new NbtFile();
-                                nbt.LoadFromStream(regionFile, NbtCompression.ZLib, null);
-                                FindSigns(nbt);
-                                break;
-                            default:
-                                throw new InvalidDataException("Invalid compression scheme provided by region file.");
-                        }
-                    }
-                }
-            }
-            Console.WriteLine("Finished reading region file: " + path);
-
-        }
-       
-        private void FindSigns(NbtFile myFile)
+        public void LoadChunk(NbtFile myFile)
         {
             //Console.WriteLine(myFile.FileName + ":" + myFile.FileCompression.ToString());
+            bool KeepLoaded = false;
             NbtCompound chunkTag = myFile.RootTag;
             NbtCompound levelTag = chunkTag.Get<NbtCompound>("Level");
             NbtList tEntitiesTag = levelTag.Get<NbtList>("TileEntities");
@@ -103,8 +75,11 @@ namespace MCGT_SignTranslator
                         Console.WriteLine("adding signNode");
                         treeView1.Nodes.Add(signNode);
                     }
+                    KeepLoaded = true;
                 }
             }
+            if (KeepLoaded)
+                LoadedChunks.Add(new Point(levelTag.Get<NbtInt>("xPos").IntValue, levelTag.Get<NbtInt>("zPos").IntValue), myFile);
         }
 
         private bool GenerateSignTextNode(TreeNode signNode, string text)
@@ -165,43 +140,9 @@ namespace MCGT_SignTranslator
                 }
                 for (int i = 0; i < files.Length; i++)
                 {
-                    LoadSigns(files[i]);
+                    RegionIO.LoadRegion(files[i], this);
                 }
             }
-        }
-
-        private Tuple<int, int> GetChunkFromTable(int x, int z, Stream regionFile) // <offset, length>
-        {
-            //Get start of the chunk in the location table
-            int tableOffset = ((x % CHUNK_SIZE) + (z % CHUNK_SIZE) * CHUNK_SIZE) * 4;
-            //goto chunklocation start
-            regionFile.Seek(tableOffset, SeekOrigin.Begin);
-            //Read the offset
-            byte[] offsetBuffer = new byte[4];
-            regionFile.Read(offsetBuffer, 0, 3);
-            Array.Reverse(offsetBuffer);
-            //Get the length in pages
-            int length = regionFile.ReadByte();
-            //offset int conversion from byte and back to amount of bytes, but in int
-            int offset = BitConverter.ToInt32(offsetBuffer, 0) << 4;
-            if (offset == 0 || length == 0)
-                return null;
-            return new Tuple<int, int>(offset, length * PAGE_LENGTH);
-        }
-        public uint ReadUInt32(Stream stream)
-        {
-            return (uint)(
-                (ReadUInt8(stream) << 24) |
-                (ReadUInt8(stream) << 16) |
-                (ReadUInt8(stream) << 8) |
-                 ReadUInt8(stream));
-        }
-        public byte ReadUInt8(Stream stream)
-        {
-            int value = stream.ReadByte();
-            if (value == -1)
-                throw new EndOfStreamException();
-            return (byte)value;
         }
 
         private void treeviewOnMouseClick(object sender, MouseEventArgs e)
