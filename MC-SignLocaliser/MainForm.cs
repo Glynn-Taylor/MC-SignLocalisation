@@ -11,6 +11,7 @@ using MCGT_SignTranslator;
 using fNbt;
 using System.IO;
 using MCGT_SignTranslator.GTaylor.Serialization;
+using MCGT_SignTranslator.GTaylor.Data;
 
 namespace MCGT_SignTranslator
 {
@@ -21,7 +22,7 @@ namespace MCGT_SignTranslator
         private string[] Languages = { "English", "Deutsch", "Francais", "Espanol" };
         private Image[] LanguageIcons = { Properties.Resources.en1, Properties.Resources.de, Properties.Resources.fr, Properties.Resources.es };
         private Dictionary<Point, NbtFile> LoadedChunks = new Dictionary<Point, NbtFile>();
-
+        private static string LevelRootPath = "";
 
         public MainForm()
         {
@@ -67,19 +68,22 @@ namespace MCGT_SignTranslator
                     Console.WriteLine(composite);
                     if (!(String.IsNullOrWhiteSpace(composite) || (composite.Distinct().Count() == 1 && composite[0] == '"')))
                     {
-                        TreeNode signNode = new TreeNode("[" + x.IntValue + "," + y.IntValue + "," + z.IntValue + "]" + getFirstText(t1, t2, t3, t4));
-                        Color signColor = Color.Green;
+                        SignNode signNode = new SignNode(entTag, "[" + x.IntValue + "," + y.IntValue + "," + z.IntValue + "]" + getFirstText(t1, t2, t3, t4));
+
                         if (GenerateSignTextNode(signNode, t1) | GenerateSignTextNode(signNode, t2) | GenerateSignTextNode(signNode, t3) | GenerateSignTextNode(signNode, t4))
-                            signColor = Color.Red;
-                        signNode.BackColor = signColor;
+                            signNode.BackColor = Color.Red;
                         Console.WriteLine("adding signNode");
                         treeView1.Nodes.Add(signNode);
                     }
                     KeepLoaded = true;
                 }
             }
-            if (KeepLoaded)
-                LoadedChunks.Add(new Point(levelTag.Get<NbtInt>("xPos").IntValue, levelTag.Get<NbtInt>("zPos").IntValue), myFile);
+            if (KeepLoaded) {
+                Point p = new Point(levelTag.Get<NbtInt>("xPos").IntValue, levelTag.Get<NbtInt>("zPos").IntValue);
+                if (!LoadedChunks.ContainsKey(p))
+                    LoadedChunks.Add(p, myFile);
+                Console.WriteLine("Adding at: " + levelTag.Get<NbtInt>("xPos").StringValue + ":" + levelTag.Get<NbtInt>("zPos").StringValue);
+            }
         }
 
         private bool GenerateSignTextNode(TreeNode signNode, string text)
@@ -123,21 +127,33 @@ namespace MCGT_SignTranslator
 
         private void onClickOpenMap(object sender, EventArgs e)
         {
+            //Text Files (*.txt)|*.txt|All Files (*.*)|*.*
+            OFD.Filter = "Level Files|Level.dat";
             if (OFD.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string path = OFD.FileName;
                 FileAttributes attr = File.GetAttributes(path);
                 //detect whether its a directory or file
                 string[] files;
-                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                string regionPath = Path.GetDirectoryName(path)+Path.DirectorySeparatorChar+"region";
+                //Check for regionpath
+                if (!Directory.Exists(regionPath))
                 {
+                    MessageBox.Show("No region folder found", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                    return;
+                }
+                LevelRootPath = Path.GetDirectoryName(path);
+                files = System.IO.Directory.GetFiles(regionPath, "*.mca", SearchOption.AllDirectories);
+                /* if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                 {
 
-                    files = System.IO.Directory.GetFiles(path, "*.mca", SearchOption.AllDirectories);
-                }
-                else
-                {
-                    files = System.IO.Directory.GetFiles(Path.GetDirectoryName(path), "*.mca", SearchOption.AllDirectories);
-                }
+                     files = System.IO.Directory.GetFiles(path, "*.mca", SearchOption.AllDirectories);
+                 }
+                 else
+                 {
+                     files = System.IO.Directory.GetFiles(Path.GetDirectoryName(path), "*.mca", SearchOption.AllDirectories);
+                 }*/
+
                 for (int i = 0; i < files.Length; i++)
                 {
                     RegionIO.LoadRegion(files[i], this);
@@ -155,5 +171,20 @@ namespace MCGT_SignTranslator
             textBox1.Text = e.Node.Text;
         }
 
+        private void RenameTest(object sender, EventArgs e)
+        {
+            foreach (SignNode node in treeView1.Nodes)
+            {
+                node.SignData.Get<NbtString>("Text1").Value = "derp";
+            }
+            if (!String.IsNullOrWhiteSpace(LevelRootPath))
+            {
+                foreach (KeyValuePair<Point, NbtFile> entry in LoadedChunks)
+                {
+                    RegionIO.SaveChunk(entry.Value, entry.Key.X, entry.Key.Y, LevelRootPath);
+                }
+
+            }
+        }
     }
 }

@@ -41,9 +41,13 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.listControl1 = new MCGT_SignTranslator.ListControl();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.localiseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -68,14 +72,14 @@
             // btnOpenMap
             // 
             this.btnOpenMap.Name = "btnOpenMap";
-            this.btnOpenMap.Size = new System.Drawing.Size(130, 22);
+            this.btnOpenMap.Size = new System.Drawing.Size(152, 22);
             this.btnOpenMap.Text = "Open Map";
             this.btnOpenMap.Click += new System.EventHandler(this.onClickOpenMap);
             // 
             // saveMapToolStripMenuItem
             // 
             this.saveMapToolStripMenuItem.Name = "saveMapToolStripMenuItem";
-            this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveMapToolStripMenuItem.Text = "Save Map";
             // 
             // optionsToolStripMenuItem
@@ -131,7 +135,9 @@
             this.menu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.generateToolStripMenuItem,
+            this.testToolStripMenuItem});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(664, 24);
@@ -187,12 +193,15 @@
             this.splitContainer2.SplitterDistance = 126;
             this.splitContainer2.TabIndex = 0;
             // 
-            // progressBar1
+            // listControl1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(420, 1);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(244, 23);
-            this.progressBar1.TabIndex = 1;
+            this.listControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.listControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listControl1.Location = new System.Drawing.Point(0, 0);
+            this.listControl1.Name = "listControl1";
+            this.listControl1.Size = new System.Drawing.Size(479, 124);
+            this.listControl1.TabIndex = 0;
             // 
             // textBox1
             // 
@@ -204,15 +213,43 @@
             this.textBox1.Size = new System.Drawing.Size(479, 106);
             this.textBox1.TabIndex = 0;
             // 
-            // listControl1
+            // progressBar1
             // 
-            this.listControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.listControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listControl1.Location = new System.Drawing.Point(0, 0);
-            this.listControl1.Name = "listControl1";
-            this.listControl1.Size = new System.Drawing.Size(479, 124);
-            this.listControl1.TabIndex = 0;
+            this.progressBar1.Location = new System.Drawing.Point(420, 1);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(244, 23);
+            this.progressBar1.TabIndex = 1;
+            // 
+            // generateToolStripMenuItem
+            // 
+            this.generateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.localiseAllToolStripMenuItem});
+            this.generateToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
+            this.generateToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.generateToolStripMenuItem.Text = "Generate";
+            // 
+            // localiseAllToolStripMenuItem
+            // 
+            this.localiseAllToolStripMenuItem.Name = "localiseAllToolStripMenuItem";
+            this.localiseAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.localiseAllToolStripMenuItem.Text = "Localise all";
+            // 
+            // testToolStripMenuItem
+            // 
+            this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.renameAllToolStripMenuItem});
+            this.testToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.testToolStripMenuItem.Text = "Test";
+            // 
+            // renameAllToolStripMenuItem
+            // 
+            this.renameAllToolStripMenuItem.Name = "renameAllToolStripMenuItem";
+            this.renameAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.renameAllToolStripMenuItem.Text = "Rename all";
+            this.renameAllToolStripMenuItem.Click += new System.EventHandler(this.RenameTest);
             // 
             // MainForm
             // 
@@ -262,7 +299,10 @@
         private ListControl listControl1;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TextBox textBox1;
-
+        private System.Windows.Forms.ToolStripMenuItem generateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem localiseAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem renameAllToolStripMenuItem;
     }
 }
 

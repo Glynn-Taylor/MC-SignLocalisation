@@ -38,6 +38,7 @@ namespace MCGT_SignTranslator.GTaylor.Serialization
                             case 2: // zlib
                                 var nbt = new NbtFile();
                                 nbt.LoadFromStream(regionFile, NbtCompression.ZLib, null);
+                                Console.WriteLine("chunk " + x + ":" + z);
                                 form.LoadChunk(nbt);
 
                                 //nbt.sa
@@ -49,7 +50,7 @@ namespace MCGT_SignTranslator.GTaylor.Serialization
                 }
             }
             Console.WriteLine("Finished reading region file: " + path);
-
+            regionFile.Close();
         }
       
 
@@ -88,7 +89,7 @@ namespace MCGT_SignTranslator.GTaylor.Serialization
             using (var regionFile = File.Open(filePath, FileMode.Open))
             {
                 //Get offset and length in pages
-                var chunkData = GetChunkFromTable(rx, rz, regionFile);
+                var chunkData = GetChunkFromTable(cx, cz, regionFile);
                 //Goto offset location
                 regionFile.Seek(chunkData.Item1, SeekOrigin.Begin);
                 int offset = chunkData.Item1;
@@ -123,13 +124,14 @@ namespace MCGT_SignTranslator.GTaylor.Serialization
                 byte[] padding = new byte[PAGE_LENGTH - remainder];
                 if (padding.Length > 0)
                     regionFile.Write(padding, 0, padding.Length);
+                regionFile.Close();
             }
 
         }
         private static Tuple<int, int> GetChunkFromTable(int x, int z, Stream regionFile) // <offset, length>
         {
             //Get start of the chunk in the location table
-            int tableOffset = ((x % CHUNK_SIZE) + (z % CHUNK_SIZE) * CHUNK_SIZE) * 4;
+            int tableOffset = ((x & (CHUNK_SIZE-1)) + (z & (CHUNK_SIZE-1)) * CHUNK_SIZE) * 4;
             //goto chunklocation start
             regionFile.Seek(tableOffset, SeekOrigin.Begin);
             //Read the offset
