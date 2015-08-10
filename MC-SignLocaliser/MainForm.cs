@@ -12,6 +12,7 @@ using fNbt;
 using System.IO;
 using MCGT_SignTranslator.GTaylor.Serialization;
 using MCGT_SignTranslator.GTaylor.Data;
+using MCGT_SignTranslator.GTaylor.Forms.Modal;
 
 namespace MCGT_SignTranslator
 {
@@ -29,6 +30,7 @@ namespace MCGT_SignTranslator
         public Label Sign_Text2 { get { return SignText2; } }
         public Label Sign_Text3 { get { return SignText3; } }
         public Label Sign_Text4 { get { return SignText4; } }
+        public string CurrentLanguage { get { return LanguageBox.SelectedItem.ToString(); } }
         public ComboBox Sign_ColorChooser { get { return ColorChooser; } }
         public ComboBox Sign_TypeChooser { get { return TypeChooser; } }
         public TextBox Sign_TypeValue1{ get { return TypeValue1; } }
@@ -54,6 +56,7 @@ namespace MCGT_SignTranslator
         }
         private void OnLoad(object sender, EventArgs e)
         {
+            MessageBox.Show("Current version is untested, backup your maps/resource packs!", "Warning", MessageBoxButtons.OK);
             /*for (int i = 0; i < Languages.Length; i++)
             {
                 LanguageSelectionItem btn = new LanguageSelectionItem();
@@ -152,6 +155,7 @@ namespace MCGT_SignTranslator
             if (OFD.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string path = OFD.FileName;
+                LoadResourcePack(Path.GetDirectoryName(path));
                 FileAttributes attr = File.GetAttributes(path);
                 //detect whether its a directory or file
                 string[] files;
@@ -178,11 +182,36 @@ namespace MCGT_SignTranslator
                 {
                     RegionIO.LoadRegion(files[i], this);
                 }
-                Resource = new ResourcePack(Path.GetDirectoryName(path));
+               
+                
             }
         }
 
-     
+        private void LoadResourcePack(string mapRoot)
+        {
+            ResourcePackDialog packDialog = new ResourcePackDialog();
+            if (packDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = packDialog.ReturnPath;
+                if (!string.IsNullOrWhiteSpace(path)) {
+                    if (path.Equals("bundled"))
+                    {
+                        Resource = new ResourcePack(mapRoot, "resources.zip");
+                    }
+                    else
+                    {
+                        Resource = new ResourcePack(path);
+                    }
+                    Resource.PopulateLanguageComboBox(LanguageBox);
+                }
+            }
+            else
+            {
+
+            }
+            
+            
+        }
 
         private void treeviewOnMouseClick(object sender, MouseEventArgs e)
         {
@@ -280,6 +309,10 @@ namespace MCGT_SignTranslator
             if (CurrentNode != null && CurrentNode.CurrentLine != null)
             {
                 CurrentNode.CurrentLine.TypeValue2 = ((TextBox)sender).Text;
+                if (CurrentNode.CurrentLine.Type == LineInfo.LineType.Translate)
+                {
+                    Resource.SetKey(CurrentNode.CurrentLine.TypeValue1, ((TextBox)sender).Text, CurrentLanguage);
+                }
                 CurrentNode.LineChanged(this);
             }
         }
@@ -374,6 +407,8 @@ namespace MCGT_SignTranslator
                 }
 
             }
+            if (Resource != null) ;
+                Resource.Save();
             UnsavedChanges = false;
         }
 
@@ -385,5 +420,46 @@ namespace MCGT_SignTranslator
                 e.Cancel = true;
             }
         }
+
+        private void LanguageBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CurrentNode != null)
+            {
+                //CurrentLanguage = ((ComboBox)sender).Text;
+                Console.WriteLine(CurrentNode.CurrentLine==null);
+                CurrentNode.LineChanged(this);
+                Console.WriteLine(CurrentNode.CurrentLine == null);
+                //CurrentNode.CurrentLine.SetForm(this);
+            }
+        }
+
+        private void TypeChooser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string boxText = ((ComboBox)sender).Text;
+            if (!string.IsNullOrWhiteSpace(boxText)){
+                TypeValue1Label.Text = Value1LabelDict[boxText];
+                TypeValue2Label.Text = Value2LabelDict[boxText];
+            }
+            if (CurrentNode != null && CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.Type = LineInfo.FromString(boxText);
+                CurrentNode.CurrentLine.Clear();
+                CurrentNode.LineChanged(this);
+            }
+        }
+        public static readonly Dictionary<string, string> Value1LabelDict = new Dictionary<string, string>
+        {
+            {"Text", "Text:"},
+            {"Selector", "Selector:"},
+            {"Translate", "Key:"},
+            {"Score", "Player:"},
+        };
+        public static readonly Dictionary<string, string> Value2LabelDict = new Dictionary<string, string>
+        {
+            {"Text", "N/A"},
+            {"Selector", "N/A"},
+            {"Translate", "Localisation:"},
+            {"Score", "Objective:"},
+        };
     }
 }

@@ -46,7 +46,7 @@
             this.EntityTree = new System.Windows.Forms.TreeView();
             this.EditorContainer = new System.Windows.Forms.SplitContainer();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.LanguageBox = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.PreviewContainer = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
@@ -76,8 +76,8 @@
             this.ColorChooser = new System.Windows.Forms.ComboBox();
             this.TypeContainer = new System.Windows.Forms.SplitContainer();
             this.label3 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.TypeValue2Label = new System.Windows.Forms.Label();
+            this.TypeValue1Label = new System.Windows.Forms.Label();
             this.TypeValue1 = new System.Windows.Forms.TextBox();
             this.TypeValue2 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -283,7 +283,7 @@
             // EditorContainer.Panel1
             // 
             this.EditorContainer.Panel1.Controls.Add(this.label4);
-            this.EditorContainer.Panel1.Controls.Add(this.comboBox1);
+            this.EditorContainer.Panel1.Controls.Add(this.LanguageBox);
             // 
             // EditorContainer.Panel2
             // 
@@ -301,14 +301,15 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Language:";
             // 
-            // comboBox1
+            // LanguageBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(72, 4);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 0;
+            this.LanguageBox.FormattingEnabled = true;
+            this.LanguageBox.Location = new System.Drawing.Point(69, 3);
+            this.LanguageBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.LanguageBox.Name = "LanguageBox";
+            this.LanguageBox.Size = new System.Drawing.Size(121, 21);
+            this.LanguageBox.TabIndex = 0;
+            this.LanguageBox.SelectedIndexChanged += new System.EventHandler(this.LanguageBox_SelectedIndexChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -394,7 +395,7 @@
             this.SignText3.AutoSize = true;
             this.SignText3.BackColor = System.Drawing.Color.Transparent;
             this.SignText3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SignText3.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignText3.Font = new System.Drawing.Font("Minecraftia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignText3.Location = new System.Drawing.Point(3, 62);
             this.SignText3.Name = "SignText3";
             this.SignText3.Size = new System.Drawing.Size(244, 31);
@@ -408,7 +409,7 @@
             this.SignText2.AutoSize = true;
             this.SignText2.BackColor = System.Drawing.Color.Transparent;
             this.SignText2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SignText2.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignText2.Font = new System.Drawing.Font("Minecraftia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignText2.Location = new System.Drawing.Point(3, 31);
             this.SignText2.Name = "SignText2";
             this.SignText2.Size = new System.Drawing.Size(244, 31);
@@ -422,7 +423,7 @@
             this.SignText4.AutoSize = true;
             this.SignText4.BackColor = System.Drawing.Color.Transparent;
             this.SignText4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SignText4.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignText4.Font = new System.Drawing.Font("Minecraftia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignText4.Location = new System.Drawing.Point(3, 93);
             this.SignText4.Name = "SignText4";
             this.SignText4.Size = new System.Drawing.Size(244, 31);
@@ -435,7 +436,7 @@
             // 
             this.SignText1.BackColor = System.Drawing.Color.Transparent;
             this.SignText1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SignText1.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignText1.Font = new System.Drawing.Font("Minecraftia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignText1.Location = new System.Drawing.Point(3, 0);
             this.SignText1.Name = "SignText1";
             this.SignText1.Size = new System.Drawing.Size(244, 31);
@@ -513,6 +514,7 @@
             // 
             this.ActionValueBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ActionValueBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ActionValueBox.ForeColor = System.Drawing.SystemColors.Control;
             this.ActionValueBox.Location = new System.Drawing.Point(52, 0);
             this.ActionValueBox.Name = "ActionValueBox";
             this.ActionValueBox.Size = new System.Drawing.Size(205, 20);
@@ -557,6 +559,7 @@
             // 
             this.ActionChooser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ActionChooser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ActionChooser.ForeColor = System.Drawing.SystemColors.Control;
             this.ActionChooser.FormattingEnabled = true;
             this.ActionChooser.Items.AddRange(new object[] {
             "run_command"});
@@ -689,6 +692,7 @@
             // 
             this.ColorChooser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ColorChooser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ColorChooser.ForeColor = System.Drawing.SystemColors.Control;
             this.ColorChooser.FormattingEnabled = true;
             this.ColorChooser.Items.AddRange(new object[] {
             "black",
@@ -729,8 +733,8 @@
             // TypeContainer.Panel2
             // 
             this.TypeContainer.Panel2.BackColor = System.Drawing.Color.Gray;
-            this.TypeContainer.Panel2.Controls.Add(this.label10);
-            this.TypeContainer.Panel2.Controls.Add(this.label9);
+            this.TypeContainer.Panel2.Controls.Add(this.TypeValue2Label);
+            this.TypeContainer.Panel2.Controls.Add(this.TypeValue1Label);
             this.TypeContainer.Panel2.Controls.Add(this.TypeValue1);
             this.TypeContainer.Panel2.Controls.Add(this.TypeValue2);
             this.TypeContainer.Panel2.Controls.Add(this.label8);
@@ -751,37 +755,38 @@
             this.label3.Text = "Type";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label10
+            // TypeValue2Label
             // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.TypeValue2Label.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(3, 62);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(39, 15);
-            this.label10.TabIndex = 6;
-            this.label10.Text = "Value:";
+            this.TypeValue2Label.AutoSize = true;
+            this.TypeValue2Label.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TypeValue2Label.Location = new System.Drawing.Point(3, 62);
+            this.TypeValue2Label.Name = "TypeValue2Label";
+            this.TypeValue2Label.Size = new System.Drawing.Size(39, 15);
+            this.TypeValue2Label.TabIndex = 6;
+            this.TypeValue2Label.Text = "Value:";
             // 
-            // label9
+            // TypeValue1Label
             // 
-            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.TypeValue1Label.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(3, 31);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(39, 15);
-            this.label9.TabIndex = 4;
-            this.label9.Text = "Value:";
+            this.TypeValue1Label.AutoSize = true;
+            this.TypeValue1Label.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TypeValue1Label.Location = new System.Drawing.Point(3, 31);
+            this.TypeValue1Label.Name = "TypeValue1Label";
+            this.TypeValue1Label.Size = new System.Drawing.Size(39, 15);
+            this.TypeValue1Label.TabIndex = 4;
+            this.TypeValue1Label.Text = "Value:";
             // 
             // TypeValue1
             // 
             this.TypeValue1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.TypeValue1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TypeValue1.Location = new System.Drawing.Point(55, 30);
+            this.TypeValue1.ForeColor = System.Drawing.SystemColors.Control;
+            this.TypeValue1.Location = new System.Drawing.Point(76, 30);
             this.TypeValue1.Name = "TypeValue1";
-            this.TypeValue1.Size = new System.Drawing.Size(205, 20);
+            this.TypeValue1.Size = new System.Drawing.Size(184, 20);
             this.TypeValue1.TabIndex = 3;
             this.TypeValue1.TextChanged += new System.EventHandler(this.TypeValue1_TextChanged);
             // 
@@ -789,9 +794,10 @@
             // 
             this.TypeValue2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.TypeValue2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TypeValue2.Location = new System.Drawing.Point(55, 62);
+            this.TypeValue2.ForeColor = System.Drawing.SystemColors.Control;
+            this.TypeValue2.Location = new System.Drawing.Point(76, 62);
             this.TypeValue2.Name = "TypeValue2";
-            this.TypeValue2.Size = new System.Drawing.Size(205, 20);
+            this.TypeValue2.Size = new System.Drawing.Size(184, 20);
             this.TypeValue2.TabIndex = 5;
             this.TypeValue2.TextChanged += new System.EventHandler(this.TypeValue2_TextChanged);
             // 
@@ -813,16 +819,18 @@
             this.TypeChooser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.TypeChooser.Cursor = System.Windows.Forms.Cursors.Default;
             this.TypeChooser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TypeChooser.ForeColor = System.Drawing.SystemColors.Control;
             this.TypeChooser.FormattingEnabled = true;
             this.TypeChooser.Items.AddRange(new object[] {
             "Text",
             "Translate",
             "Score",
             "Selector"});
-            this.TypeChooser.Location = new System.Drawing.Point(55, 3);
+            this.TypeChooser.Location = new System.Drawing.Point(76, 3);
             this.TypeChooser.Name = "TypeChooser";
-            this.TypeChooser.Size = new System.Drawing.Size(205, 21);
+            this.TypeChooser.Size = new System.Drawing.Size(184, 21);
             this.TypeChooser.TabIndex = 1;
+            this.TypeChooser.SelectedIndexChanged += new System.EventHandler(this.TypeChooser_SelectedIndexChanged);
             // 
             // RawContainer
             // 
@@ -972,7 +980,7 @@
         private System.Windows.Forms.SplitContainer TypeContainer;
         private System.Windows.Forms.TextBox RawTextBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox LanguageBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -994,11 +1002,11 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox ActionChooser;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label TypeValue1Label;
         private System.Windows.Forms.TextBox TypeValue1;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox TypeChooser;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label TypeValue2Label;
         private System.Windows.Forms.TextBox TypeValue2;
         private System.Windows.Forms.CheckBox ObfuscateButton;
         private System.Windows.Forms.CheckBox StrikethroughButton;

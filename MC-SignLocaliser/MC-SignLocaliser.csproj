@@ -70,6 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GTaylor\Data\SignNode.cs" />
+    <Compile Include="GTaylor\Forms\Modal\ResourcePackDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GTaylor\Forms\Modal\ResourcePackDialog.Designer.cs">
+      <DependentUpon>ResourcePackDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="GTaylor\JSON\JSON.cs" />
     <Compile Include="GTaylor\Serialization\RegionIO.cs" />
     <Compile Include="GTaylor\Serialization\ResourcePack.cs" />
@@ -98,6 +104,9 @@
     <None Include="Resources\Obfuscated.png" />
     <None Include="Resources\Italic.png" />
     <None Include="Resources\Bold.png" />
+    <EmbeddedResource Include="GTaylor\Forms\Modal\ResourcePackDialog.resx">
+      <DependentUpon>ResourcePackDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LanguageSelectionItem.resx">
       <DependentUpon>LanguageSelectionItem.cs</DependentUpon>
     </EmbeddedResource>

@@ -58,23 +58,24 @@ namespace MCGT_SignTranslator.GTaylor.Data
                 Console.WriteLine(String.Format("{0}:{1}", key, table[key]));
             }*/
             Lines[0] = new LineInfo(t1);
-            Lines[0].SetLabel(form.Sign_Text1);
+            Lines[0].SetLabel(form.Sign_Text1, form);
             Lines[1] = new LineInfo(t2);
-            Lines[1].SetLabel(form.Sign_Text2);
+            Lines[1].SetLabel(form.Sign_Text2, form);
             Lines[2] = new LineInfo(t3);
-            Lines[2].SetLabel(form.Sign_Text3);
+            Lines[2].SetLabel(form.Sign_Text3, form);
             Lines[3] = new LineInfo(t4);
-            Lines[3].SetLabel(form.Sign_Text4);
+            Lines[3].SetLabel(form.Sign_Text4, form);
 
             form.Sign_RawText.Text = t1 + t2 + t3 + t4;
             form.CurrentNode = this;
         }
         public void OnClick(int lineNum, MainForm form)
         {
+            LoadedLine = 0;
             int index = lineNum - 1;
             Lines[index].SetForm(form);
-            //Lines[index].Print();
             LoadedLine = lineNum;
+            //Lines[index].Print();
         }
         public void LineChanged(MainForm form)
         {
@@ -82,11 +83,12 @@ namespace MCGT_SignTranslator.GTaylor.Data
             SignData.Get<NbtString>("Text2").Value = Lines[1].ToJSON();
             SignData.Get<NbtString>("Text3").Value = Lines[2].ToJSON();
             SignData.Get<NbtString>("Text4").Value = Lines[3].ToJSON();
-            Lines[0].SetLabel(form.Sign_Text1);
-            Lines[1].SetLabel(form.Sign_Text2);
-            Lines[2].SetLabel(form.Sign_Text3);
-            Lines[3].SetLabel(form.Sign_Text4);
-            CurrentLine.SetForm(form);
+            Lines[0].SetLabel(form.Sign_Text1, form);
+            Lines[1].SetLabel(form.Sign_Text2, form);
+            Lines[2].SetLabel(form.Sign_Text3, form);
+            Lines[3].SetLabel(form.Sign_Text4, form);
+            if(CurrentLine!=null)
+                CurrentLine.SetForm(form);
             form.MarkUnsaved();
             form.Sign_RawText.Text = SignData.Get<NbtString>("Text1").StringValue+ SignData.Get<NbtString>("Text2").StringValue+ SignData.Get<NbtString>("Text3").StringValue+ SignData.Get<NbtString>("Text4").StringValue;
         }
@@ -107,6 +109,7 @@ namespace MCGT_SignTranslator.GTaylor.Data
                 m_typeValue1 = value;
                 Text = m_typeValue1;
             }
+            get {return m_typeValue1; }
         }
         public string TypeValue2
         {
@@ -135,12 +138,24 @@ namespace MCGT_SignTranslator.GTaylor.Data
                 Text = json;
         }
        
-        public void SetLabel(Label lbl)
+        public void SetLabel(Label lbl, MainForm form)
         {
-            if (Text.ToLower().Equals("null")&&string.IsNullOrWhiteSpace(m_typeValue1))
-                lbl.Text = "";
-            else
-                lbl.Text = Text;
+            if (Type == LineType.Translate)
+            {
+                if (string.IsNullOrWhiteSpace(m_typeValue1))
+                    lbl.Text = "";
+                else
+                {
+                    lbl.Text = form.Resource.Localise(m_typeValue1, form.CurrentLanguage);
+                    m_typeValue2 = lbl.Text;
+                }
+            }
+            else {
+                if (Text.ToLower().Equals("null") && string.IsNullOrWhiteSpace(m_typeValue1))
+                    lbl.Text = "";
+                else
+                    lbl.Text = Text;
+            }
             FontStyle formatting = (Bold ? FontStyle.Bold : FontStyle.Regular) | (Italic ? FontStyle.Italic : FontStyle.Regular) | (Underlined ? FontStyle.Underline : FontStyle.Regular) | (Strikethrough ? FontStyle.Strikeout: FontStyle.Regular);
             lbl.Font = new Font(lbl.Font, formatting);
             lbl.ForeColor = TextColor;
@@ -148,7 +163,6 @@ namespace MCGT_SignTranslator.GTaylor.Data
         public void SetForm(MainForm form)
         {
             //Type
-            
             form.Sign_TypeChooser.SelectedIndex = form.Sign_TypeChooser.FindStringExact(Type.ToString());
             form.Sign_TypeValue1.Text = m_typeValue1;
             form.Sign_TypeValue2.Text = m_typeValue2;
@@ -162,6 +176,7 @@ namespace MCGT_SignTranslator.GTaylor.Data
                 form.Sign_ActionValue.Text = ActionValue;
             }
             form.SetFormatting(Bold, Italic, Underlined, Strikethrough, Obfuscated);
+            
         }
         public void FromJSON(string json)
         {
@@ -290,6 +305,27 @@ namespace MCGT_SignTranslator.GTaylor.Data
             Console.WriteLine("Underlined:    " + Underlined.ToString());
             Console.WriteLine("Strikethrough: " + Strikethrough.ToString());
             Console.WriteLine("Obfuscated:    " + Obfuscated.ToString());
+        }
+        internal static LineType FromString(string v)
+        {
+            switch (v)
+            {
+                case "Text":
+                    return LineType.Text;
+                case "Selector":
+                    return LineType.Selector;
+                case "Score":
+                    return LineType.Score;
+                case "Translate":
+                    return LineType.Translate;
+            }
+            return LineType.Text;
+        }
+
+        internal void Clear()
+        {
+            m_typeValue1 = "";
+            m_typeValue2 = "";
         }
     }
 }
