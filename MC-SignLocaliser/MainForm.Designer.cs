@@ -65,6 +65,11 @@
             this.label6 = new System.Windows.Forms.Label();
             this.ActionChooser = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ObfuscateButton = new System.Windows.Forms.CheckBox();
+            this.StrikethroughButton = new System.Windows.Forms.CheckBox();
+            this.UnderlineButton = new System.Windows.Forms.CheckBox();
+            this.ItalicButton = new System.Windows.Forms.CheckBox();
+            this.BoldButton = new System.Windows.Forms.CheckBox();
             this.EventButton = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
@@ -81,11 +86,6 @@
             this.Raw = new System.Windows.Forms.Label();
             this.RawTextBox = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.BoldButton = new System.Windows.Forms.CheckBox();
-            this.ItalicButton = new System.Windows.Forms.CheckBox();
-            this.UnderlineButton = new System.Windows.Forms.CheckBox();
-            this.StrikethroughButton = new System.Windows.Forms.CheckBox();
-            this.ObfuscateButton = new System.Windows.Forms.CheckBox();
             this.menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainContainer)).BeginInit();
             this.MainContainer.Panel1.SuspendLayout();
@@ -140,7 +140,7 @@
             // saveMapToolStripMenuItem
             // 
             this.saveMapToolStripMenuItem.Name = "saveMapToolStripMenuItem";
-            this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.saveMapToolStripMenuItem.Text = "Save Map";
             this.saveMapToolStripMenuItem.Click += new System.EventHandler(this.saveMapToolStripMenuItem_Click);
             // 
@@ -581,6 +581,76 @@
             this.panel1.Size = new System.Drawing.Size(260, 18);
             this.panel1.TabIndex = 1;
             // 
+            // ObfuscateButton
+            // 
+            this.ObfuscateButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ObfuscateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ObfuscateButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.ObfuscateButton.Location = new System.Drawing.Point(114, -4);
+            this.ObfuscateButton.Name = "ObfuscateButton";
+            this.ObfuscateButton.Size = new System.Drawing.Size(31, 22);
+            this.ObfuscateButton.TabIndex = 9;
+            this.ObfuscateButton.Text = "Ob";
+            this.ObfuscateButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ObfuscateButton.UseVisualStyleBackColor = true;
+            this.ObfuscateButton.CheckedChanged += new System.EventHandler(this.ObfuscateButton_CheckedChanged);
+            // 
+            // StrikethroughButton
+            // 
+            this.StrikethroughButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.StrikethroughButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StrikethroughButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.StrikethroughButton.Location = new System.Drawing.Point(86, -4);
+            this.StrikethroughButton.Name = "StrikethroughButton";
+            this.StrikethroughButton.Size = new System.Drawing.Size(22, 22);
+            this.StrikethroughButton.TabIndex = 8;
+            this.StrikethroughButton.Text = "S";
+            this.StrikethroughButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.StrikethroughButton.UseVisualStyleBackColor = true;
+            this.StrikethroughButton.CheckedChanged += new System.EventHandler(this.StrikethroughButton_CheckedChanged);
+            // 
+            // UnderlineButton
+            // 
+            this.UnderlineButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.UnderlineButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UnderlineButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.UnderlineButton.Location = new System.Drawing.Point(58, -4);
+            this.UnderlineButton.Name = "UnderlineButton";
+            this.UnderlineButton.Size = new System.Drawing.Size(22, 22);
+            this.UnderlineButton.TabIndex = 7;
+            this.UnderlineButton.Text = "U";
+            this.UnderlineButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.UnderlineButton.UseVisualStyleBackColor = true;
+            this.UnderlineButton.CheckedChanged += new System.EventHandler(this.UnderlineButton_CheckedChanged);
+            // 
+            // ItalicButton
+            // 
+            this.ItalicButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ItalicButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ItalicButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.ItalicButton.Location = new System.Drawing.Point(30, -4);
+            this.ItalicButton.Name = "ItalicButton";
+            this.ItalicButton.Size = new System.Drawing.Size(22, 22);
+            this.ItalicButton.TabIndex = 6;
+            this.ItalicButton.Text = "i";
+            this.ItalicButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ItalicButton.UseVisualStyleBackColor = true;
+            this.ItalicButton.CheckedChanged += new System.EventHandler(this.ItalicButton_CheckedChanged);
+            // 
+            // BoldButton
+            // 
+            this.BoldButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.BoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BoldButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BoldButton.Location = new System.Drawing.Point(3, -4);
+            this.BoldButton.Name = "BoldButton";
+            this.BoldButton.Size = new System.Drawing.Size(22, 22);
+            this.BoldButton.TabIndex = 5;
+            this.BoldButton.Text = "B";
+            this.BoldButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.BoldButton.UseVisualStyleBackColor = true;
+            this.BoldButton.CheckedChanged += new System.EventHandler(this.BoldButton_CheckedChanged);
+            // 
             // EventButton
             // 
             this.EventButton.AutoSize = true;
@@ -811,76 +881,6 @@
             this.progressBar1.Size = new System.Drawing.Size(244, 22);
             this.progressBar1.TabIndex = 1;
             // 
-            // BoldButton
-            // 
-            this.BoldButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.BoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BoldButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BoldButton.Location = new System.Drawing.Point(3, -4);
-            this.BoldButton.Name = "BoldButton";
-            this.BoldButton.Size = new System.Drawing.Size(22, 22);
-            this.BoldButton.TabIndex = 5;
-            this.BoldButton.Text = "B";
-            this.BoldButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.BoldButton.UseVisualStyleBackColor = true;
-            this.BoldButton.CheckedChanged += new System.EventHandler(this.BoldButton_CheckedChanged);
-            // 
-            // ItalicButton
-            // 
-            this.ItalicButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.ItalicButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ItalicButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ItalicButton.Location = new System.Drawing.Point(30, -4);
-            this.ItalicButton.Name = "ItalicButton";
-            this.ItalicButton.Size = new System.Drawing.Size(22, 22);
-            this.ItalicButton.TabIndex = 6;
-            this.ItalicButton.Text = "i";
-            this.ItalicButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ItalicButton.UseVisualStyleBackColor = true;
-            this.ItalicButton.CheckedChanged += new System.EventHandler(this.ItalicButton_CheckedChanged);
-            // 
-            // UnderlineButton
-            // 
-            this.UnderlineButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.UnderlineButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UnderlineButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.UnderlineButton.Location = new System.Drawing.Point(58, -4);
-            this.UnderlineButton.Name = "UnderlineButton";
-            this.UnderlineButton.Size = new System.Drawing.Size(22, 22);
-            this.UnderlineButton.TabIndex = 7;
-            this.UnderlineButton.Text = "U";
-            this.UnderlineButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.UnderlineButton.UseVisualStyleBackColor = true;
-            this.UnderlineButton.CheckedChanged += new System.EventHandler(this.UnderlineButton_CheckedChanged);
-            // 
-            // StrikethroughButton
-            // 
-            this.StrikethroughButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.StrikethroughButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StrikethroughButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.StrikethroughButton.Location = new System.Drawing.Point(86, -4);
-            this.StrikethroughButton.Name = "StrikethroughButton";
-            this.StrikethroughButton.Size = new System.Drawing.Size(22, 22);
-            this.StrikethroughButton.TabIndex = 8;
-            this.StrikethroughButton.Text = "S";
-            this.StrikethroughButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.StrikethroughButton.UseVisualStyleBackColor = true;
-            this.StrikethroughButton.CheckedChanged += new System.EventHandler(this.StrikethroughButton_CheckedChanged);
-            // 
-            // ObfuscateButton
-            // 
-            this.ObfuscateButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.ObfuscateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ObfuscateButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ObfuscateButton.Location = new System.Drawing.Point(114, -4);
-            this.ObfuscateButton.Name = "ObfuscateButton";
-            this.ObfuscateButton.Size = new System.Drawing.Size(31, 22);
-            this.ObfuscateButton.TabIndex = 9;
-            this.ObfuscateButton.Text = "Ob";
-            this.ObfuscateButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ObfuscateButton.UseVisualStyleBackColor = true;
-            this.ObfuscateButton.CheckedChanged += new System.EventHandler(this.ObfuscateButton_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -896,6 +896,7 @@
             this.MinimumSize = new System.Drawing.Size(713, 425);
             this.Name = "MainForm";
             this.Text = "MCGT Translate";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.Load += new System.EventHandler(this.OnLoad);
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();

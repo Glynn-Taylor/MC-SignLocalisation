@@ -54,6 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\fNbt.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip.Reduced">
+      <HintPath>lib\Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -69,6 +72,7 @@
     <Compile Include="GTaylor\Data\SignNode.cs" />
     <Compile Include="GTaylor\JSON\JSON.cs" />
     <Compile Include="GTaylor\Serialization\RegionIO.cs" />
+    <Compile Include="GTaylor\Serialization\ResourcePack.cs" />
     <Compile Include="LanguageSelectionItem.cs">
       <SubType>UserControl</SubType>
     </Compile>

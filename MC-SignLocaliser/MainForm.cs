@@ -38,6 +38,7 @@ namespace MCGT_SignTranslator
         public ComboBox Sign_Action { get { return ActionChooser; } }
         public TextBox Sign_ActionValue { get { return ActionValueBox; } }
         public bool UnsavedChanges = false;
+        public ResourcePack Resource;
 
         public MainForm()
         {
@@ -177,8 +178,11 @@ namespace MCGT_SignTranslator
                 {
                     RegionIO.LoadRegion(files[i], this);
                 }
+                Resource = new ResourcePack(Path.GetDirectoryName(path));
             }
         }
+
+     
 
         private void treeviewOnMouseClick(object sender, MouseEventArgs e)
         {
@@ -371,6 +375,15 @@ namespace MCGT_SignTranslator
 
             }
             UnsavedChanges = false;
+        }
+
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(UnsavedChanges)
+            if (MessageBox.Show("There is unsaved changes, are you sure you wish to exit?", "Application Exit", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
