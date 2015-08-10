@@ -19,10 +19,25 @@ namespace MCGT_SignTranslator
     {
         private const int CHUNK_SIZE = 32;
         private const int PAGE_LENGTH = 4096;
+        private readonly Color HIGHLIGHT_GREY = Color.FromArgb(150,50, 50, 50);
         private string[] Languages = { "English", "Deutsch", "Francais", "Espanol" };
         private Image[] LanguageIcons = { Properties.Resources.en1, Properties.Resources.de, Properties.Resources.fr, Properties.Resources.es };
         private Dictionary<Point, NbtFile> LoadedChunks = new Dictionary<Point, NbtFile>();
         private static string LevelRootPath = "";
+        public SignNode CurrentNode=null;
+        public Label Sign_Text1 { get { return SignText1; } }
+        public Label Sign_Text2 { get { return SignText2; } }
+        public Label Sign_Text3 { get { return SignText3; } }
+        public Label Sign_Text4 { get { return SignText4; } }
+        public ComboBox Sign_ColorChooser { get { return ColorChooser; } }
+        public ComboBox Sign_TypeChooser { get { return TypeChooser; } }
+        public TextBox Sign_TypeValue1{ get { return TypeValue1; } }
+        public TextBox Sign_TypeValue2 { get { return TypeValue2; } }
+        public TextBox Sign_RawText { get { return RawTextBox; } }
+        public RadioButton Sign_EventButton { get { return EventButton; } }
+        public ComboBox Sign_Action { get { return ActionChooser; } }
+        public TextBox Sign_ActionValue { get { return ActionValueBox; } }
+        public bool UnsavedChanges = false;
 
         public MainForm()
         {
@@ -32,15 +47,19 @@ namespace MCGT_SignTranslator
         {
 
         }
+        public void MarkUnsaved()
+        {
+            UnsavedChanges = true;
+        }
         private void OnLoad(object sender, EventArgs e)
         {
-            for (int i = 0; i < Languages.Length; i++)
+            /*for (int i = 0; i < Languages.Length; i++)
             {
                 LanguageSelectionItem btn = new LanguageSelectionItem();
                 btn.Initialise(LanguageIcons[i], Languages[i]);
                 this.listControl1.Add(btn);
 
-            }
+            }*/
         }
 
         //Example of translated sign at r.0.2 [31,0] in test
@@ -73,7 +92,7 @@ namespace MCGT_SignTranslator
                         if (GenerateSignTextNode(signNode, t1) | GenerateSignTextNode(signNode, t2) | GenerateSignTextNode(signNode, t3) | GenerateSignTextNode(signNode, t4))
                             signNode.BackColor = Color.Red;
                         Console.WriteLine("adding signNode");
-                        treeView1.Nodes.Add(signNode);
+                        EntityTree.Nodes.Add(signNode);
                     }
                     KeepLoaded = true;
                 }
@@ -168,12 +187,14 @@ namespace MCGT_SignTranslator
 
         private void treeviewOnMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            textBox1.Text = e.Node.Text;
+            RawTextBox.Text = e.Node.Text;
+            ((SignNode)e.Node).OnClick(this);
+            //SignText1
         }
 
         private void RenameTest(object sender, EventArgs e)
         {
-            foreach (SignNode node in treeView1.Nodes)
+            foreach (SignNode node in EntityTree.Nodes)
             {
                 node.SignData.Get<NbtString>("Text1").Value = "derp";
             }
@@ -185,6 +206,171 @@ namespace MCGT_SignTranslator
                 }
 
             }
+        }
+
+        private void splitContainer2_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void ColorChooser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(CurrentNode!= null&& CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.TextColor = SignNode.ColorDictionary[((ComboBox)sender).Text];
+                CurrentNode.LineChanged(this);
+            }
+        }
+
+        private void SignText1_Click(object sender, EventArgs e)
+        {
+            ResetTextColor();
+            SignText1.BackColor = HIGHLIGHT_GREY;
+            if (CurrentNode != null)
+                CurrentNode.OnClick(1, this);
+        }
+
+        private void SignText2_Click(object sender, EventArgs e)
+        {
+            ResetTextColor();
+            SignText2.BackColor = HIGHLIGHT_GREY;
+            if (CurrentNode != null)
+                CurrentNode.OnClick(2, this);
+        }
+
+        private void SignText3_Click(object sender, EventArgs e)
+        {
+            ResetTextColor();
+            SignText3.BackColor = HIGHLIGHT_GREY;
+            if (CurrentNode != null)
+                CurrentNode.OnClick(3, this);
+        }
+
+        private void SignText4_Click(object sender, EventArgs e)
+        {
+            ResetTextColor();
+            SignText4.BackColor = HIGHLIGHT_GREY;
+            if (CurrentNode != null)
+                CurrentNode.OnClick(4, this);
+        }
+        private void ResetTextColor()
+        {
+            //Console.WriteLine(CurrentNode == null);
+            SignText1.BackColor = Color.Transparent;
+            SignText2.BackColor = Color.Transparent;
+            SignText3.BackColor = Color.Transparent;
+            SignText4.BackColor = Color.Transparent;
+        }
+
+        private void TypeValue1_TextChanged(object sender, EventArgs e)
+        {
+            if (CurrentNode != null && CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.TypeValue1 = ((TextBox)sender).Text;
+                CurrentNode.LineChanged(this);
+            }
+        }
+
+        private void TypeValue2_TextChanged(object sender, EventArgs e)
+        {
+            if (CurrentNode != null && CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.TypeValue2 = ((TextBox)sender).Text;
+                CurrentNode.LineChanged(this);
+            }
+        }
+
+        private void EventButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CurrentNode != null && CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.HasEvent = ((RadioButton)sender).Checked;
+                CurrentNode.LineChanged(this);
+            }
+        }
+
+        private void ActionChooser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CurrentNode != null && CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.Action= ((ComboBox)sender).Text;
+                CurrentNode.LineChanged(this);
+            }
+        }
+
+        private void ActionValueBox_TextChanged(object sender, EventArgs e)
+        {
+            if (CurrentNode != null && CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.ActionValue = ((TextBox)sender).Text;
+                CurrentNode.LineChanged(this);
+            }
+        }
+
+        private void BoldButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CurrentNode != null && CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.Bold = ((CheckBox)sender).Checked;
+                CurrentNode.LineChanged(this);
+            }
+        }
+
+        private void ItalicButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CurrentNode != null && CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.Italic = ((CheckBox)sender).Checked;
+                CurrentNode.LineChanged(this);
+            }
+        }
+
+        private void UnderlineButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CurrentNode != null && CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.Underlined = ((CheckBox)sender).Checked;
+                CurrentNode.LineChanged(this);
+            }
+        }
+
+        private void StrikethroughButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CurrentNode != null && CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.Strikethrough = ((CheckBox)sender).Checked;
+                CurrentNode.LineChanged(this);
+            }
+        }
+
+        private void ObfuscateButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CurrentNode != null && CurrentNode.CurrentLine != null)
+            {
+                CurrentNode.CurrentLine.Obfuscated = ((CheckBox)sender).Checked;
+                CurrentNode.LineChanged(this);
+            }
+        }
+        public void SetFormatting(bool B, bool I, bool U, bool S, bool Ob)
+        {
+            BoldButton.Checked = B;
+            ItalicButton.Checked = I;
+            UnderlineButton.Checked = U;
+            StrikethroughButton.Checked = S;
+            ObfuscateButton.Checked = Ob;
+        }
+
+        private void saveMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrWhiteSpace(LevelRootPath))
+            {
+                foreach (KeyValuePair<Point, NbtFile> entry in LoadedChunks)
+                {
+                    RegionIO.SaveChunk(entry.Value, entry.Key.X, entry.Key.Y, LevelRootPath);
+                }
+
+            }
+            UnsavedChanges = false;
         }
     }
 }

@@ -38,7 +38,7 @@ namespace MCGT_SignTranslator.GTaylor.Serialization
                             case 2: // zlib
                                 var nbt = new NbtFile();
                                 nbt.LoadFromStream(regionFile, NbtCompression.ZLib, null);
-                                Console.WriteLine("chunk " + x + ":" + z);
+                                //Console.WriteLine("chunk " + x + ":" + z);
                                 form.LoadChunk(nbt);
 
                                 //nbt.sa

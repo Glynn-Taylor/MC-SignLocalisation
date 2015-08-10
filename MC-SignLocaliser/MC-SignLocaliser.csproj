@@ -11,6 +11,7 @@
     <AssemblyName>MCGT-SignTranslator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GTaylor\Data\SignNode.cs" />
+    <Compile Include="GTaylor\JSON\JSON.cs" />
     <Compile Include="GTaylor\Serialization\RegionIO.cs" />
     <Compile Include="LanguageSelectionItem.cs">
       <SubType>UserControl</SubType>
@@ -88,6 +89,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Resources\Underline.png" />
+    <None Include="Resources\Strickethrough.png" />
+    <None Include="Resources\Obfuscated.png" />
+    <None Include="Resources\Italic.png" />
+    <None Include="Resources\Bold.png" />
     <EmbeddedResource Include="LanguageSelectionItem.resx">
       <DependentUpon>LanguageSelectionItem.cs</DependentUpon>
     </EmbeddedResource>
@@ -107,6 +113,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Content Include="Minecraftia.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -151,6 +160,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MCSignBack.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sign_text.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
