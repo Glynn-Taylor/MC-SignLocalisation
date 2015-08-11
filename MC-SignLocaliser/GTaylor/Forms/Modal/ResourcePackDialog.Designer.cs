@@ -28,27 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.FormCancelButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.ExternalPackButton = new System.Windows.Forms.Button();
             this.BundledPackButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // CancelButton
+            // FormCancelButton
             // 
-            this.CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.CancelButton.BackColor = System.Drawing.Color.Brown;
-            this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CancelButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CancelButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.CancelButton.Location = new System.Drawing.Point(12, 125);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(75, 23);
-            this.CancelButton.TabIndex = 0;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.UseVisualStyleBackColor = false;
-            this.CancelButton.Click += new System.EventHandler(this.button1_Click);
+            this.FormCancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.FormCancelButton.BackColor = System.Drawing.Color.Brown;
+            this.FormCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.FormCancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.FormCancelButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormCancelButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.FormCancelButton.Location = new System.Drawing.Point(12, 125);
+            this.FormCancelButton.Name = "FormCancelButton";
+            this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
+            this.FormCancelButton.TabIndex = 0;
+            this.FormCancelButton.Text = "Cancel";
+            this.FormCancelButton.UseVisualStyleBackColor = false;
+            this.FormCancelButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -97,12 +97,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.CancelButton = this.CancelButton;
             this.ClientSize = new System.Drawing.Size(345, 160);
             this.Controls.Add(this.ExternalPackButton);
             this.Controls.Add(this.BundledPackButton);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.FormCancelButton);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ResourcePackDialog";
@@ -118,7 +117,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button FormCancelButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button ExternalPackButton;
         private System.Windows.Forms.Button BundledPackButton;

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.Collections;
+using MCGT_SignTranslator.GTaylor.Serialization;
 
 namespace MCGT_SignTranslator.GTaylor.Data
 {
@@ -40,33 +41,68 @@ namespace MCGT_SignTranslator.GTaylor.Data
                     {"white", Color.White}
         };
 
-        public SignNode(NbtCompound data, string text)
+        public SignNode(NbtCompound data, string text, ResourcePack resource)
         {
             SignData = data;
             this.Text = text;
             this.BackColor= Color.Green;
+            CreateLineInfo();
+            CheckTranslationStatus(resource);
         }
-        public void OnClick(MainForm form)
+
+        private void CheckTranslationStatus(ResourcePack resource)
+        {
+            this.BackColor = Color.Green;
+            foreach (LineInfo info in Lines)
+            {
+                if (info.Type == LineInfo.LineType.Text&&!string.IsNullOrWhiteSpace(info.TypeValue1))
+                {
+                    BackColor = Color.Red;
+                    return;
+                }
+                if (info.Type == LineInfo.LineType.Translate)
+                {
+                    foreach(KeyValuePair<string,Dictionary<string,string>> Language in resource.Languages)
+                    {
+                        if(!Language.Value.ContainsKey(info.TypeValue1)|| Language.Value[info.TypeValue1].Equals(ResourcePack.TAG_UNTRANSLATED))
+                        {
+                            BackColor = Color.Orange;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CreateLineInfo()
         {
             string t1 = SignData.Get<NbtString>("Text1").StringValue;
             string t2 = SignData.Get<NbtString>("Text2").StringValue;
             string t3 = SignData.Get<NbtString>("Text3").StringValue;
             string t4 = SignData.Get<NbtString>("Text4").StringValue;
+            Lines[0] = new LineInfo(t1);
+            Lines[1] = new LineInfo(t2);
+            Lines[2] = new LineInfo(t3);
+            Lines[3] = new LineInfo(t4);
+        }
+        public void OnClick(MainForm form)
+        {
+           
             /*Hashtable table = (Hashtable)Procurios.Public.JSON.JsonDecode(t2);
             foreach (string key in table.Keys)
             {
                 Console.WriteLine(String.Format("{0}:{1}", key, table[key]));
             }*/
-            Lines[0] = new LineInfo(t1);
+           
             Lines[0].SetLabel(form.Sign_Text1, form);
-            Lines[1] = new LineInfo(t2);
+            
             Lines[1].SetLabel(form.Sign_Text2, form);
-            Lines[2] = new LineInfo(t3);
+            
             Lines[2].SetLabel(form.Sign_Text3, form);
-            Lines[3] = new LineInfo(t4);
+            
             Lines[3].SetLabel(form.Sign_Text4, form);
 
-            form.Sign_RawText.Text = t1 + t2 + t3 + t4;
+            form.Sign_RawText.Text = SignData.Get<NbtString>("Text1").StringValue + SignData.Get<NbtString>("Text2").StringValue + SignData.Get<NbtString>("Text3").StringValue + SignData.Get<NbtString>("Text4").StringValue;
+
             form.CurrentNode = this;
         }
         public void OnClick(int lineNum, MainForm form)
@@ -91,6 +127,34 @@ namespace MCGT_SignTranslator.GTaylor.Data
                 CurrentLine.SetForm(form);
             form.MarkUnsaved();
             form.Sign_RawText.Text = SignData.Get<NbtString>("Text1").StringValue+ SignData.Get<NbtString>("Text2").StringValue+ SignData.Get<NbtString>("Text3").StringValue+ SignData.Get<NbtString>("Text4").StringValue;
+            CheckTranslationStatus(form.Resource);
+        }
+        internal string RemoveTextWhitespace(string input)
+        {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+        }
+        public void LocaliseAllLines(MainForm mainForm)
+        {
+            bool changed = false;
+            foreach (LineInfo info in Lines)
+            {
+                if (info.Type == LineInfo.LineType.Text && !string.IsNullOrWhiteSpace(info.TypeValue1))
+                {
+                    LoadedLine = 0;
+                    info.Type = LineInfo.LineType.Translate;
+                    string txt = info.TypeValue1;
+                   // Console.WriteLine(txt+":"+info.Text+":"+ RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10))));
+                    
+                    info.TypeValue1 = "sign." + RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10)));
+                    changed = true;
+                    //info.TypeValue1 = txt;
+                    mainForm.Resource.SetKey(info.TypeValue1, txt, mainForm.CurrentLanguage);
+                }
+            }
+            if (changed)
+                LineChanged(mainForm);
         }
         
     }

@@ -88,14 +88,14 @@ namespace MCGT_SignTranslator
                     NbtInt y = entTag.Get<NbtInt>("y");
                     NbtInt z = entTag.Get<NbtInt>("z");
                     string composite = t1 + t2 + t3 + t4;
-                    Console.WriteLine(composite);
+                    //Console.WriteLine(composite);
                     if (!(String.IsNullOrWhiteSpace(composite) || (composite.Distinct().Count() == 1 && composite[0] == '"')))
                     {
-                        SignNode signNode = new SignNode(entTag, "[" + x.IntValue + "," + y.IntValue + "," + z.IntValue + "]" + getFirstText(t1, t2, t3, t4));
+                        SignNode signNode = new SignNode(entTag, "[" + x.IntValue + "," + y.IntValue + "," + z.IntValue + "]" + getFirstText(t1, t2, t3, t4), Resource);
 
-                        if (GenerateSignTextNode(signNode, t1) | GenerateSignTextNode(signNode, t2) | GenerateSignTextNode(signNode, t3) | GenerateSignTextNode(signNode, t4))
-                            signNode.BackColor = Color.Red;
-                        Console.WriteLine("adding signNode");
+                        //if (GenerateSignTextNode(signNode, t1) | GenerateSignTextNode(signNode, t2) | GenerateSignTextNode(signNode, t3) | GenerateSignTextNode(signNode, t4))
+                           // signNode.BackColor = Color.Red;
+                        //Console.WriteLine("adding signNode");
                         EntityTree.Nodes.Add(signNode);
                     }
                     KeepLoaded = true;
@@ -105,7 +105,7 @@ namespace MCGT_SignTranslator
                 Point p = new Point(levelTag.Get<NbtInt>("xPos").IntValue, levelTag.Get<NbtInt>("zPos").IntValue);
                 if (!LoadedChunks.ContainsKey(p))
                     LoadedChunks.Add(p, myFile);
-                Console.WriteLine("Adding at: " + levelTag.Get<NbtInt>("xPos").StringValue + ":" + levelTag.Get<NbtInt>("zPos").StringValue);
+                //Console.WriteLine("Adding at: " + levelTag.Get<NbtInt>("xPos").StringValue + ":" + levelTag.Get<NbtInt>("zPos").StringValue);
             }
         }
 
@@ -124,7 +124,6 @@ namespace MCGT_SignTranslator
             }
             else
             {
-                Console.WriteLine("bad:" + text);
                 TreeNode node = new TreeNode(text);
                 node.BackColor = Color.Red;
                 signNode.Nodes.Add(node);
@@ -407,7 +406,7 @@ namespace MCGT_SignTranslator
                 }
 
             }
-            if (Resource != null) ;
+            if (Resource != null)
                 Resource.Save();
             UnsavedChanges = false;
         }
@@ -425,10 +424,9 @@ namespace MCGT_SignTranslator
         {
             if (CurrentNode != null)
             {
-                //CurrentLanguage = ((ComboBox)sender).Text;
-                Console.WriteLine(CurrentNode.CurrentLine==null);
+               
                 CurrentNode.LineChanged(this);
-                Console.WriteLine(CurrentNode.CurrentLine == null);
+              
                 //CurrentNode.CurrentLine.SetForm(this);
             }
         }
@@ -461,5 +459,13 @@ namespace MCGT_SignTranslator
             {"Translate", "Localisation:"},
             {"Score", "Objective:"},
         };
+
+        private void localiseAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach(SignNode node in EntityTree.Nodes)
+            {
+                node.LocaliseAllLines(this);
+            }
+        }
     }
 }

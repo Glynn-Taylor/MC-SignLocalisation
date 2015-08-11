@@ -40,8 +40,6 @@
             this.menu = new System.Windows.Forms.MenuStrip();
             this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.localiseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.renameAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainContainer = new System.Windows.Forms.SplitContainer();
             this.EntityTree = new System.Windows.Forms.TreeView();
             this.EditorContainer = new System.Windows.Forms.SplitContainer();
@@ -149,6 +147,7 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.automaticSavingToolStripMenuItem,
             this.defaultLanguageToolStripMenuItem});
+            this.optionsToolStripMenuItem.Enabled = false;
             this.optionsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -198,8 +197,7 @@
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.optionsToolStripMenuItem,
-            this.generateToolStripMenuItem,
-            this.testToolStripMenuItem});
+            this.generateToolStripMenuItem});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(697, 24);
@@ -218,24 +216,9 @@
             // localiseAllToolStripMenuItem
             // 
             this.localiseAllToolStripMenuItem.Name = "localiseAllToolStripMenuItem";
-            this.localiseAllToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.localiseAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.localiseAllToolStripMenuItem.Text = "Localise all";
-            // 
-            // testToolStripMenuItem
-            // 
-            this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.renameAllToolStripMenuItem});
-            this.testToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
-            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
-            this.testToolStripMenuItem.Text = "Test";
-            // 
-            // renameAllToolStripMenuItem
-            // 
-            this.renameAllToolStripMenuItem.Name = "renameAllToolStripMenuItem";
-            this.renameAllToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.renameAllToolStripMenuItem.Text = "Rename all";
-            this.renameAllToolStripMenuItem.Click += new System.EventHandler(this.RenameTest);
+            this.localiseAllToolStripMenuItem.Click += new System.EventHandler(this.localiseAllToolStripMenuItem_Click);
             // 
             // MainContainer
             // 
@@ -970,8 +953,6 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.ToolStripMenuItem generateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem localiseAllToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem renameAllToolStripMenuItem;
         private System.Windows.Forms.SplitContainer EditorContainer;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.SplitContainer RawContainer;
