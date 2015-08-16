@@ -140,17 +140,31 @@ namespace MCGT_SignTranslator.GTaylor.Data
             bool changed = false;
             foreach (LineInfo info in Lines)
             {
-                if (info.Type == LineInfo.LineType.Text && !string.IsNullOrWhiteSpace(info.TypeValue1))
-                {
-                    LoadedLine = 0;
-                    info.Type = LineInfo.LineType.Translate;
-                    string txt = info.TypeValue1;
-                   // Console.WriteLine(txt+":"+info.Text+":"+ RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10))));
-                    
-                    info.TypeValue1 = "sign." + RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10)));
-                    changed = true;
-                    //info.TypeValue1 = txt;
-                    mainForm.Resource.SetKey(info.TypeValue1, txt, mainForm.CurrentLanguage);
+                if (info.Type == LineInfo.LineType.Text) {
+                    if (!string.IsNullOrWhiteSpace(info.TypeValue1))
+                    {
+                        LoadedLine = 0;
+                        info.Type = LineInfo.LineType.Translate;
+                        string txt = info.TypeValue1;
+                        // Console.WriteLine(txt+":"+info.Text+":"+ RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10))));
+
+                        info.TypeValue1 = "sign." + RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10)));
+                        changed = true;
+                        //info.TypeValue1 = txt;
+                        mainForm.Resource.SetKey(info.TypeValue1, txt, mainForm.CurrentLanguage);
+                    }
+                    else if (!string.IsNullOrWhiteSpace(info.Text)&&!info.Text.Equals("null"))
+                    {
+                        LoadedLine = 0;
+                        info.Type = LineInfo.LineType.Translate;
+                        string txt = info.Text;
+                        // Console.WriteLine(txt+":"+info.Text+":"+ RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10))));
+
+                        info.TypeValue1 = "sign." + RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10)));
+                        changed = true;
+                        //info.TypeValue1 = txt;
+                        mainForm.Resource.SetKey(info.TypeValue1, txt, mainForm.CurrentLanguage);
+                    }
                 }
             }
             if (changed)
@@ -199,7 +213,15 @@ namespace MCGT_SignTranslator.GTaylor.Data
             if (json.StartsWith("{"))
                 FromJSON(json);
             else
+            {
+                if (json.StartsWith("\"") && json.EndsWith("\""))
+                    if (json.Length == 2)
+                        json = "";
+                    else
+                        json = json.Substring(1, json.Length - 2);
                 Text = json;
+            }
+                
         }
        
         public void SetLabel(Label lbl, MainForm form)

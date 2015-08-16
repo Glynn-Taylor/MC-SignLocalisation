@@ -11,6 +11,9 @@ namespace MCGT_SignTranslator.GTaylor.Serialization
 {
     public class ResourcePack
     {
+        public static readonly string PATH_DEFAULTFOLDER = Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + "/Global Sign Editor";
+        public static readonly string PATH_DEFAULTFILE = PATH_DEFAULTFOLDER + "/resouces.zip";
+
         private const string PATH_LANG = "assets/minecraft/lang/";
         public const string TAG_UNTRANSLATED = "[?Untranslated?]";
         private const string LINE_SEPERATOR = @"\r\n";
@@ -71,6 +74,11 @@ namespace MCGT_SignTranslator.GTaylor.Serialization
                     }
                 }
             }
+            else
+            {
+                Languages.Add(MCLocalize.getFileName(Properties.Settings.Default.Language), new Dictionary<string, string>());
+
+            }
             //Print();
             /*
                      zip.RemoveEntry(entry);
@@ -96,15 +104,36 @@ namespace MCGT_SignTranslator.GTaylor.Serialization
         }
         public void Save()
         {
-            ZipFile zip = ZipFile.Read(ZipPath);
             
-            foreach (KeyValuePair<string, Dictionary<string, string>> langPair in Languages)
-            {
-                zip.RemoveEntry(PATH_LANG + langPair.Key);
-                zip.AddEntry(PATH_LANG + langPair.Key, CreateFileString(langPair.Value), Encoding.Default);
+            if (File.Exists(ZipPath)) {
+                ZipFile zip = ZipFile.Read(ZipPath);
+                foreach (KeyValuePair<string, Dictionary<string, string>> langPair in Languages)
+                {
+                    if (zip.ContainsEntry(PATH_LANG + langPair.Key)) 
+                        zip.RemoveEntry(PATH_LANG + langPair.Key);
+                    zip.AddEntry(PATH_LANG + langPair.Key, CreateFileString(langPair.Value), Encoding.Unicode);
+                }
+                zip.Save();
             }
-            //zip.AddEntry(entry.FileName, text, ASCIIEncoding.Unicode);
-            zip.Save();
+            else
+            {
+                //FileStream fs = File.Create(ZipPath);
+                //fs.Close();
+                //pFile zip = new ZipFile()
+                using (ZipFile zip = new ZipFile()){ 
+                    
+                    //zip.AddDirectory("assets");
+                    // zip.AddDirectory("assets/minecraft");
+                   // zip.AddDirectory("assets/minecraft/lang");
+                    zip.AddEntry("pack.mcmeta", "{\"pack\": { \"pack_format\": 1,\"description\": \"My MC Pack\" }}");
+                    foreach (KeyValuePair<string, Dictionary<string, string>> langPair in Languages)
+                    {
+                        //zip.RemoveEntry(PATH_LANG + langPair.Key);
+                        zip.AddEntry(PATH_LANG + langPair.Key, CreateFileString(langPair.Value), Encoding.Unicode);
+                    }
+                    zip.Save(ZipPath);
+                }
+            }
         }
 
         private string CreateFileString(Dictionary<string, string> value)

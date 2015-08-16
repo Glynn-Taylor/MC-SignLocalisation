@@ -13,6 +13,7 @@ using System.IO;
 using MCGT_SignTranslator.GTaylor.Serialization;
 using MCGT_SignTranslator.GTaylor.Data;
 using MCGT_SignTranslator.GTaylor.Forms.Modal;
+using MCGT_SignTranslator.GTaylor;
 
 namespace MCGT_SignTranslator
 {
@@ -57,6 +58,16 @@ namespace MCGT_SignTranslator
         private void OnLoad(object sender, EventArgs e)
         {
             MessageBox.Show("Current version is untested, backup your maps/resource packs!", "Warning", MessageBoxButtons.OK);
+            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.Language))
+            {
+                LanguageSelectDialog dialog = new LanguageSelectDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    string path = dialog.ReturnLanguage;
+                    Properties.Settings.Default.Language = path;
+                    Properties.Settings.Default.Save();
+                }
+            }
             /*for (int i = 0; i < Languages.Length; i++)
             {
                 LanguageSelectionItem btn = new LanguageSelectionItem();
@@ -133,14 +144,14 @@ namespace MCGT_SignTranslator
 
         private string getFirstText(string p1, string p2, string p3, string p4)
         {
-            if (!String.IsNullOrWhiteSpace(p1))
+            if (!String.IsNullOrWhiteSpace(p1)&&!p1.Equals("null"))
                 return p1;
                 //return p1.Substring(0, p1.Length > 9 ? 10 : p1.Length);
-            if (!String.IsNullOrWhiteSpace(p2))
+            if (!String.IsNullOrWhiteSpace(p2) && !p2.Equals("null"))
                 return p2;
-            if (!String.IsNullOrWhiteSpace(p3))
+            if (!String.IsNullOrWhiteSpace(p3) && !p3.Equals("null"))
                 return p3;
-            if (!String.IsNullOrWhiteSpace(p4))
+            if (!String.IsNullOrWhiteSpace(p4) && !p4.Equals("null"))
                 return p4;
             return "";
         }
@@ -201,14 +212,19 @@ namespace MCGT_SignTranslator
                     {
                         Resource = new ResourcePack(path);
                     }
-                    Resource.PopulateLanguageComboBox(LanguageBox);
+                   
+                }
+                else
+                {
+                    Resource = new ResourcePack(mapRoot, "resources.zip");
                 }
             }
             else
             {
-
+                Resource = new ResourcePack(mapRoot, "resources.zip");
             }
-            
+            Resource.PopulateLanguageComboBox(LanguageBox);
+            Console.WriteLine("Pack path: " + Resource.ZipPath);
             
         }
 
@@ -224,21 +240,7 @@ namespace MCGT_SignTranslator
             //SignText1
         }
 
-        private void RenameTest(object sender, EventArgs e)
-        {
-            foreach (SignNode node in EntityTree.Nodes)
-            {
-                node.SignData.Get<NbtString>("Text1").Value = "derp";
-            }
-            if (!String.IsNullOrWhiteSpace(LevelRootPath))
-            {
-                foreach (KeyValuePair<Point, NbtFile> entry in LoadedChunks)
-                {
-                    RegionIO.SaveChunk(entry.Value, entry.Key.X, entry.Key.Y, LevelRootPath);
-                }
-
-            }
-        }
+      
 
         private void splitContainer2_Panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -414,7 +416,7 @@ namespace MCGT_SignTranslator
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             if(UnsavedChanges)
-            if (MessageBox.Show("There is unsaved changes, are you sure you wish to exit?", "Application Exit", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            if (MessageBox.Show("There are unsaved changes, are you sure you wish to exit?", "Application Exit", MessageBoxButtons.YesNo) != DialogResult.Yes)
             {
                 e.Cancel = true;
             }
@@ -465,6 +467,21 @@ namespace MCGT_SignTranslator
             foreach(SignNode node in EntityTree.Nodes)
             {
                 node.LocaliseAllLines(this);
+            }
+        }
+
+        private void addNewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LanguageSelectDialog dialog = new LanguageSelectDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string lang = MCLocalize.getFileName(dialog.ReturnLanguage);
+                if (Resource != null)
+                {
+                    if(!Resource.Languages.ContainsKey(lang))
+                    Resource.Languages.Add(lang,new Dictionary<string, string>());
+                    Resource.PopulateLanguageComboBox(LanguageBox);
+                }
             }
         }
     }

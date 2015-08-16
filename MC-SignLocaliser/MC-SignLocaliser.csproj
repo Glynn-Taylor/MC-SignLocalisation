@@ -70,6 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GTaylor\Data\SignNode.cs" />
+    <Compile Include="GTaylor\Forms\Modal\LanguageSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GTaylor\Forms\Modal\LanguageSelectDialog.Designer.cs">
+      <DependentUpon>LanguageSelectDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="GTaylor\Forms\Modal\ResourcePackDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +83,7 @@
       <DependentUpon>ResourcePackDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="GTaylor\JSON\JSON.cs" />
+    <Compile Include="GTaylor\MCLocalize.cs" />
     <Compile Include="GTaylor\Serialization\RegionIO.cs" />
     <Compile Include="GTaylor\Serialization\ResourcePack.cs" />
     <Compile Include="LanguageSelectionItem.cs">
@@ -99,22 +106,31 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Resources\World.bmp" />
     <None Include="Resources\Underline.png" />
     <None Include="Resources\Strickethrough.png" />
     <None Include="Resources\Obfuscated.png" />
     <None Include="Resources\Italic.png" />
     <None Include="Resources\Bold.png" />
+    <EmbeddedResource Include="GTaylor\Forms\Modal\LanguageSelectDialog.resx">
+      <DependentUpon>LanguageSelectDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GTaylor\Forms\Modal\ResourcePackDialog.resx">
       <DependentUpon>ResourcePackDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="LanguageSelectionItem.resx">
       <DependentUpon>LanguageSelectionItem.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ListControl.resx">
       <DependentUpon>ListControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -126,6 +142,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="images\world.png" />
     <Content Include="Minecraftia.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

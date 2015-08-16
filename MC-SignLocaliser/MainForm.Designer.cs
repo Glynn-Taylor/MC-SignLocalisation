@@ -40,6 +40,8 @@
             this.menu = new System.Windows.Forms.MenuStrip();
             this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.localiseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddnewLanguageButton = new System.Windows.Forms.ToolStripMenuItem();
             this.MainContainer = new System.Windows.Forms.SplitContainer();
             this.EntityTree = new System.Windows.Forms.TreeView();
             this.EditorContainer = new System.Windows.Forms.SplitContainer();
@@ -197,7 +199,8 @@
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.optionsToolStripMenuItem,
-            this.generateToolStripMenuItem});
+            this.generateToolStripMenuItem,
+            this.languageToolStripMenuItem});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(697, 24);
@@ -216,9 +219,25 @@
             // localiseAllToolStripMenuItem
             // 
             this.localiseAllToolStripMenuItem.Name = "localiseAllToolStripMenuItem";
-            this.localiseAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.localiseAllToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.localiseAllToolStripMenuItem.Text = "Localise all";
             this.localiseAllToolStripMenuItem.Click += new System.EventHandler(this.localiseAllToolStripMenuItem_Click);
+            // 
+            // languageToolStripMenuItem
+            // 
+            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddnewLanguageButton});
+            this.languageToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.languageToolStripMenuItem.Text = "Language";
+            // 
+            // AddnewLanguageButton
+            // 
+            this.AddnewLanguageButton.Name = "AddnewLanguageButton";
+            this.AddnewLanguageButton.Size = new System.Drawing.Size(123, 22);
+            this.AddnewLanguageButton.Text = "Add New";
+            this.AddnewLanguageButton.Click += new System.EventHandler(this.addNewToolStripMenuItem_Click);
             // 
             // MainContainer
             // 
@@ -994,6 +1013,8 @@
         private System.Windows.Forms.CheckBox UnderlineButton;
         private System.Windows.Forms.CheckBox ItalicButton;
         private System.Windows.Forms.CheckBox BoldButton;
+        private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AddnewLanguageButton;
     }
 }
 

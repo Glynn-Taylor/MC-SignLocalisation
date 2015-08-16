@@ -62,6 +62,7 @@
             this.label1.Text = "Choose external resource pack\r\nor\r\nuse pack bundled with map?\r\n(autocreates if no" +
     "n-existent)\r\n";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // ExternalPackButton
             // 

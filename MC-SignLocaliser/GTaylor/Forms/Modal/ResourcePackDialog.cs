@@ -21,6 +21,7 @@ namespace MCGT_SignTranslator.GTaylor.Forms.Modal
 
         private void button1_Click(object sender, EventArgs e)
         {
+            ReturnPath = "";
             this.Close();
         }
 
@@ -39,6 +40,11 @@ namespace MCGT_SignTranslator.GTaylor.Forms.Modal
                 ReturnPath = OFD.FileName;
                 this.Close();
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
