@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GTaylor\Data\SignNode.cs" />
+    <Compile Include="GTaylor\Data\TextUtil.cs" />
     <Compile Include="GTaylor\Forms\Modal\LanguageSelectDialog.cs">
       <SubType>Form</SubType>
     </Compile>

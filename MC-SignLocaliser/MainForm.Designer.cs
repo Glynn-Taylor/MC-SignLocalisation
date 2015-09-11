@@ -397,7 +397,7 @@
             this.SignText3.AutoSize = true;
             this.SignText3.BackColor = System.Drawing.Color.Transparent;
             this.SignText3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SignText3.Font = new System.Drawing.Font("Minecraftia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignText3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignText3.Location = new System.Drawing.Point(3, 62);
             this.SignText3.Name = "SignText3";
             this.SignText3.Size = new System.Drawing.Size(244, 31);
@@ -411,7 +411,7 @@
             this.SignText2.AutoSize = true;
             this.SignText2.BackColor = System.Drawing.Color.Transparent;
             this.SignText2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SignText2.Font = new System.Drawing.Font("Minecraftia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignText2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignText2.Location = new System.Drawing.Point(3, 31);
             this.SignText2.Name = "SignText2";
             this.SignText2.Size = new System.Drawing.Size(244, 31);
@@ -425,7 +425,7 @@
             this.SignText4.AutoSize = true;
             this.SignText4.BackColor = System.Drawing.Color.Transparent;
             this.SignText4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SignText4.Font = new System.Drawing.Font("Minecraftia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignText4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignText4.Location = new System.Drawing.Point(3, 93);
             this.SignText4.Name = "SignText4";
             this.SignText4.Size = new System.Drawing.Size(244, 31);
@@ -438,7 +438,7 @@
             // 
             this.SignText1.BackColor = System.Drawing.Color.Transparent;
             this.SignText1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SignText1.Font = new System.Drawing.Font("Minecraftia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignText1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignText1.Location = new System.Drawing.Point(3, 0);
             this.SignText1.Name = "SignText1";
             this.SignText1.Size = new System.Drawing.Size(244, 31);

@@ -14,6 +14,7 @@ using MCGT_SignTranslator.GTaylor.Serialization;
 using MCGT_SignTranslator.GTaylor.Data;
 using MCGT_SignTranslator.GTaylor.Forms.Modal;
 using MCGT_SignTranslator.GTaylor;
+using System.Text.RegularExpressions;
 
 namespace MCGT_SignTranslator
 {
@@ -300,7 +301,14 @@ namespace MCGT_SignTranslator
         {
             if (CurrentNode != null && CurrentNode.CurrentLine != null)
             {
+                if (CurrentNode.CurrentLine.Type == LineInfo.LineType.Translate)
+                {
+
+                    ((TextBox)sender).Text = TextUtil.StripNonKeyCharacters(((TextBox)sender).Text);
+                }
+                
                 CurrentNode.CurrentLine.TypeValue1 = ((TextBox)sender).Text;
+                
                 CurrentNode.LineChanged(this);
             }
         }

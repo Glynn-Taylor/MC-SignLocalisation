@@ -148,7 +148,7 @@ namespace MCGT_SignTranslator.GTaylor.Data
                         string txt = info.TypeValue1;
                         // Console.WriteLine(txt+":"+info.Text+":"+ RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10))));
 
-                        info.TypeValue1 = "sign." + RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10)));
+                        info.TypeValue1 = "sign." + TextUtil.StripNonKeyCharacters(RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10))));
                         changed = true;
                         //info.TypeValue1 = txt;
                         mainForm.Resource.SetKey(info.TypeValue1, txt, mainForm.CurrentLanguage);
@@ -160,7 +160,7 @@ namespace MCGT_SignTranslator.GTaylor.Data
                         string txt = info.Text;
                         // Console.WriteLine(txt+":"+info.Text+":"+ RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10))));
 
-                        info.TypeValue1 = "sign." + RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10)));
+                        info.TypeValue1 = "sign." + TextUtil.StripNonKeyCharacters(RemoveTextWhitespace(txt.Substring(0, Math.Min(txt.Length, 10))));
                         changed = true;
                         //info.TypeValue1 = txt;
                         mainForm.Resource.SetKey(info.TypeValue1, txt, mainForm.CurrentLanguage);
@@ -273,56 +273,58 @@ namespace MCGT_SignTranslator.GTaylor.Data
                 }
             */
             Hashtable table = (Hashtable)Procurios.Public.JSON.JsonDecode(json);
-            if (table.ContainsKey("text"))
+            if (table != null)
             {
-                Type = LineType.Text;
-                m_typeValue1 = (string)table["text"];
+                if (table.ContainsKey("text"))
+                {
+                    Type = LineType.Text;
+                    m_typeValue1 = (string)table["text"];
+                }
+                if (table.ContainsKey("selector"))
+                {
+                    Type = LineType.Selector;
+                    m_typeValue1 = (string)table["selector"];
+                }
+                if (table.ContainsKey("translate"))
+                {
+                    Type = LineType.Translate;
+                    m_typeValue1 = (string)table["translate"];
+                }
+                if (table.ContainsKey("score"))
+                {
+                    Type = LineType.Score;
+                    Hashtable scoreTable = (Hashtable)table["score"];
+                    if (scoreTable.ContainsKey("name"))
+                        m_typeValue1 = (string)scoreTable["name"];
+                    if (scoreTable.ContainsKey("objective"))
+                        m_typeValue2 = (string)scoreTable["objective"];
+                }
+                Text = m_typeValue1;
+                if (table.ContainsKey("color"))
+                {
+                    TextColor = SignNode.ColorDictionary[(string)table["color"]];
+                }
+                if (table.ContainsKey("bold"))
+                    Bold = (bool)table["bold"];
+                if (table.ContainsKey("italic"))
+                    Italic = (bool)table["italic"];
+                if (table.ContainsKey("underlined"))
+                    Underlined = (bool)table["underlined"];
+                if (table.ContainsKey("obfuscated"))
+                    Obfuscated = (bool)table["obfuscated"];
+                if (table.ContainsKey("strikethrough"))
+                    Strikethrough = (bool)table["strikethrough"];
+                if (table.ContainsKey("clickEvent"))
+                {
+                    HasEvent = true;
+                    Hashtable eventTable = (Hashtable)table["clickEvent"];
+                    if (eventTable.ContainsKey("action"))
+                        Action = (string)eventTable["action"];
+                    if (eventTable.ContainsKey("value"))
+                        ActionValue = (string)eventTable["value"];
+                }
+
             }
-            if (table.ContainsKey("selector"))
-            {
-                Type = LineType.Selector;
-                m_typeValue1 = (string)table["selector"];
-            }
-            if (table.ContainsKey("translate"))
-            {
-                Type = LineType.Translate;
-                m_typeValue1 = (string)table["translate"];
-            }
-            if (table.ContainsKey("score"))
-            {
-                Type = LineType.Score;
-                Hashtable scoreTable = (Hashtable)table["score"];
-                if (scoreTable.ContainsKey("name"))
-                    m_typeValue1 = (string)scoreTable["name"];
-                if (scoreTable.ContainsKey("objective"))
-                    m_typeValue2 = (string)scoreTable["objective"];
-            }
-            Text = m_typeValue1;
-            if (table.ContainsKey("color"))
-            {
-                TextColor = SignNode.ColorDictionary[(string)table["color"]];
-            }
-            if (table.ContainsKey("bold"))
-                Bold = (bool)table["bold"];
-            if (table.ContainsKey("italic"))
-                Italic = (bool)table["italic"];
-            if (table.ContainsKey("underlined"))
-                Underlined = (bool)table["underlined"];
-            if (table.ContainsKey("obfuscated"))
-                Obfuscated = (bool)table["obfuscated"];
-            if (table.ContainsKey("strikethrough"))
-                Strikethrough = (bool)table["strikethrough"];
-            if (table.ContainsKey("clickEvent"))
-            {
-                HasEvent = true;
-                Hashtable eventTable = (Hashtable)table["clickEvent"];
-                if (eventTable.ContainsKey("action"))
-                    Action = (string)eventTable["action"];
-                if (eventTable.ContainsKey("value"))
-                    ActionValue = (string)eventTable["value"];
-            }
-               
-           
 
         }
         public string ToJSON()
